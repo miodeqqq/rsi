@@ -42,7 +42,7 @@ class GreetingsServer:
         uri = daemon.register(GreetingsServer, 'gretting')
 
         # print the uri so we can use it in the client later
-        print('Object URI --> {}'.format(uri))
+        print('[Server is running] Object URI --> {}'.format(uri))
 
         # start the event loop of the server to wait for calls
         daemon.requestLoop()
