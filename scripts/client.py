@@ -27,14 +27,14 @@ class GreetingsClient:
         if all([self.condition1, self.condition2]):
             # get pyro proxy obj
             try:
-                greeting_server = Pyro4.Proxy(self.uri)
-
-                # call method normally
-                print('\t\n3) Server response --> {}\n'.format(
-                    greeting_server.get_name(self.client_name)
-                ))
+                with Pyro4.Proxy(self.uri) as obj:
+                    # call method normally
+                    print('\n\t3) Server response --> {}\n'.format(
+                        obj.get_name(self.client_name)
+                    ))
             except CommunicationError:
                 print('\t\nCannot connect to --> {}'.format(self.uri))
+
             except PyroError:
                 print('\t\nInvalid URI...')
 
