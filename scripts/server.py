@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 
-import Pyro4
+from Pyro4 import expose, Daemon
 
 
-@Pyro4.expose
+@expose
 class GreetingsServer:
     """
     Anything that isn’t decorated with @expose is not remotely accessible.
@@ -35,7 +35,7 @@ class GreetingsServer:
     def run_server(self):
         # creates a Pyro daemon
 
-        with Pyro4.core.Daemon() as daemon:
+        with Daemon() as daemon:
             # Greetings as Pyro object
             uri = daemon.register(GreetingsServer, 'calculator')
 

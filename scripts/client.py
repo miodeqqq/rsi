@@ -1,13 +1,15 @@
 #! /usr/bin/env python
 
-import Pyro4
-from Pyro4.errors import CommunicationError, PyroError
+from Pyro4 import Proxy
+from Pyro4.errors import CommunicationError
 
 
 class GreetingsClient:
     uri, client_name, client_numbers, con1, con2, con3 = None, None, None, False, False, False
 
     pyro_obj = None
+
+    x, y = None, None
 
     def contain_only_numbers(self):
         """
@@ -24,6 +26,10 @@ class GreetingsClient:
         return True if len(self.client_numbers) == 2 else False
 
     def get_uri_obj(self):
+        """
+        Pyro daemon obj.
+        """
+
         self.uri = input('\n\t1) Please put your URI object...\n\t')
 
         if not self.uri or not self.uri.strip():
@@ -32,6 +38,10 @@ class GreetingsClient:
             self.con1 = True
 
     def get_client_name(self):
+        """
+        Gets user input data (username) to be used in calling remote object.
+        """
+
         self.client_name = input('\n\t2) What\'s your name ?\n\t')
 
         if not self.client_name or not self.client_name.strip():
@@ -40,6 +50,10 @@ class GreetingsClient:
             self.con2 = True
 
     def get_client_numbers(self):
+        """
+        Gets user input data (numbers) to be used in calling remote object.
+        """
+
         self.client_numbers = input('\n\t3) Put two (comma-separated numbers)...\n\t')
 
         if not self.client_numbers or not self.client_numbers.strip():
@@ -55,16 +69,21 @@ class GreetingsClient:
         else:
             self.client_numbers = list(map(int, self.client_numbers))
 
+            self.x, self.y = self.client_numbers
+
             self.con3 = True
 
-    def get_server_response_and_uri(self):
+    def get_server_response(self):
         """
         Returns server URI
         """
 
-        print('\n\t3) Server response --> {}\n'.format(
-            self.pyro_obj.get_name(self.client_name)
-        ))
+        try:
+            print('\n\t3) Server response --> {}\n'.format(
+                self.pyro_obj.get_name(self.client_name)
+            ))
+        except CommunicationError as e:
+            print('[CommunicationError] --> {}'.format(e))
 
     def get_calculator_results(self):
         """
@@ -72,23 +91,19 @@ class GreetingsClient:
         """
 
         if self.uri:
-            x, y = self.client_numbers
             print('\t4) Calculator results for numbers:\t')
-            print('\t\ta) Sum: {}'.format(self.pyro_obj.add(x, y)))
-            print('\t\tb) Substract: {}'.format(self.pyro_obj.sub(x, y)))
-            print('\t\tc) Divide: {}'.format(self.pyro_obj.div(x, y)))
-            print('\t\td) Multiple: {}'.format(self.pyro_obj.mul(x, y)))
+            print('\t\ta) Sum: {}'.format(self.pyro_obj.add(self.x, self.y)))
+            print('\t\tb) Substract: {}'.format(self.pyro_obj.sub(self.x, self.y)))
+            print('\t\tc) Divide: {}'.format(self.pyro_obj.div(self.x, self.y)))
+            print('\t\td) Multiple: {}'.format(self.pyro_obj.mul(self.x, self.y)))
 
     def get_pyro_obj(self):
         if all([self.con1, self.con2, self.con3]):
             try:
-                with Pyro4.Proxy(self.uri) as obj:
+                with Proxy(self.uri) as obj:
                     self.pyro_obj = obj
-            except CommunicationError:
-                print('\t\nCannot connect to --> {}'.format(self.uri))
-
-            except PyroError:
-                print('\t\nInvalid URI...')
+            except Exception as e:
+                print('[get_pyro_obj] Error --> {}'.format(e))
 
     def run(self):
         while not self.con1:
@@ -101,7 +116,7 @@ class GreetingsClient:
             self.get_client_numbers()
 
         self.get_pyro_obj()
-        self.get_server_response_and_uri()
+        self.get_server_response()
         self.get_calculator_results()
 
 
