@@ -97,6 +97,22 @@ class GreetingsClient:
             print('\t\tc) Divide: {}'.format(self.pyro_obj.div(self.x, self.y)))
             print('\t\td) Multiple: {}'.format(self.pyro_obj.mul(self.x, self.y)))
 
+
+    def get_db_product_count(self):
+        """
+
+        """
+
+        print('[get_db_product_count]', self.pyro_obj.get_products_count())
+
+
+    def get_db_person_count(self):
+        """
+
+        """
+
+        print('[get_db_person_count]', self.pyro_obj.get_persons_count())
+
     def get_pyro_obj(self):
         if all([self.con1, self.con2, self.con3]):
             try:
@@ -118,6 +134,8 @@ class GreetingsClient:
         self.get_pyro_obj()
         self.get_server_response()
         self.get_calculator_results()
+        self.get_db_product_count()
+        self.get_db_person_count()
 
 
 GreetingsClient().run()
