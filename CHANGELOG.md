@@ -1,4 +1,9 @@
-### Version v1.0.0.0
+### Version v1.1.0.0
+
+## Release date: 05.03.2019
+
+* Extended Client/Server scripts with creating SQLITE3 database and calling it objects, making queries;
+
 
 ### Release date: 26.02.2019
 

@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 
-import sqlite3
 import os
+import sqlite3
+
 from Pyro4 import expose, Daemon
 
 
@@ -15,45 +16,52 @@ class GreetingsServer:
     def __init__(self):
         super(GreetingsServer, self).__init__()
 
-        self.conn, self.cursor = self.db()
+        self.conn, self.cursor = self.init_db()
 
-    def db(self):
+    def init_db(self):
         """
         Initialises connection with db (existing).
         """
 
         database = os.path.join('./rsi.db')
 
-        conn = sqlite3.connect(
-            database=database,
-            timeout=5
-        )
+        if os.path.isfile(database):
+            conn = sqlite3.connect(
+                database=database,
+                timeout=5
+            )
 
-        return conn, conn.cursor()
+            return conn, conn.cursor()
+        else:
+            print('Database file not found...')
+            exit()
 
     def get_name(self, name):
+        """
+        Returns username.
+        """
+
         return 'Hello, {0}.'.format(name)
+
+    def get_data_by_user_query(self):
+        """
+        Returns query result based on user input.
+        """
+        pass
 
     def get_products_count(self):
         """
         Returns products count.
         """
 
-        products_count = self.cursor.execute("SELECT * from product;")
-
-        return products_count.fetchone()[0]
+        return self.cursor.execute("SELECT count(*) from product;").fetchone()[0]
 
     def get_persons_count(self):
         """
         Returns persons count.
         """
 
-        for row in self.cursor.execute("SELECT * FROM person;"):
-            print(row)
-
-        persons_count = self.cursor.execute("SELECT * from person;")
-
-        return persons_count.fetchone()[0]
+        return self.cursor.execute("SELECT count(*) from person;").fetchone()[0]
 
     @staticmethod
     def mul(x, y):
@@ -77,7 +85,9 @@ class GreetingsServer:
             # Greetings as Pyro object
             uri = daemon.register(GreetingsServer, 'calculator')
 
-            # print the uri so we can use it in the client later
+            with open('./uri.txt', 'w') as f:
+                f.write(str(uri).strip())
+
             print('[Server is running] Object URI --> {}'.format(uri))
 
             # start the event loop of the server to wait for calls

@@ -30,12 +30,15 @@ class GreetingsClient:
         Pyro daemon obj.
         """
 
-        self.uri = input('\n\t1) Please put your URI object...\n\t')
+        with open('./uri.txt', 'r') as f:
+            self.uri = f.read().strip()
 
-        if not self.uri or not self.uri.strip():
-            print('\n\tURI object string is required...\n\t')
-        else:
-            self.con1 = True
+            if not self.uri or not self.uri.strip():
+                print('\n\tURI object string is required...\n\t')
+            else:
+                self.con1 = True
+
+            print('\n\t1) Server is running at: {uri}...\n\t'.format(uri=self.uri))
 
     def get_client_name(self):
         """
@@ -97,21 +100,25 @@ class GreetingsClient:
             print('\t\tc) Divide: {}'.format(self.pyro_obj.div(self.x, self.y)))
             print('\t\td) Multiple: {}'.format(self.pyro_obj.mul(self.x, self.y)))
 
-
     def get_db_product_count(self):
         """
-
+        Calls database object to return product's count.
         """
 
-        print('[get_db_product_count]', self.pyro_obj.get_products_count())
-
+        if self.uri:
+            print('\n\t5) Products count from database: {products_count}\t'.format(
+                products_count=self.pyro_obj.get_products_count())
+            )
 
     def get_db_person_count(self):
         """
-
+        Calls database object to return person's count.
         """
 
-        print('[get_db_person_count]', self.pyro_obj.get_persons_count())
+        if self.uri:
+            print('\n\t6) Persons count from database: {persons_count}\t'.format(
+                persons_count=self.pyro_obj.get_persons_count())
+            )
 
     def get_pyro_obj(self):
         if all([self.con1, self.con2, self.con3]):

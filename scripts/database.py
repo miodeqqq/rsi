@@ -99,16 +99,22 @@ class ServerDatabase:
 
         assert ['person', 'product'] == db_tables
 
+    def _commit(self):
+        return self.conn.commit()
+
     def run(self):
         """
         Runs the entire pipeline to create database.
         """
 
         self._initial_cleanup()
+
         self.create_db_structure()
         self.verify_db_creation()
         self.insert_into_person_table()
         self.insert_data_into_product_table()
+
+        self._commit()
 
 
 ServerDatabase(db_name='rsi.db').run()
