@@ -114,3 +114,5 @@ ENV/
 .mypy_cache/
 
 .DS_Store
+scripts/rsi.db
+scripts/uri.txt
