@@ -12,36 +12,42 @@ class RandomPeopleGenerator:
     def __init__(self, number):
         self.number = number
 
-    def generate_people(self):
+    def generate_data(self):
         """
-        Generates random people data.
-        """
-
-        faker = Faker()
-
-        return [(faker.first_name(), faker.last_name(), randint(1, 80)) for _ in range(self.number)]
-
-    def generate_products(self):
-        """
-        Generates random products data.
+        Generates random people/products data.
         """
 
         faker = Faker()
 
-        return [(faker.word(), uniform(13.5, 299.4), randint(100, 990), randint(1, 1000)) for _ in range(self.number)]
+        people = [
+            (
+                faker.first_name(),
+                faker.last_name(),
+                randint(1, 80)
+            ) for _ in range(self.number)
+        ]
+
+        products = [
+            (
+                faker.word(),
+                '{:.3f}'.format(uniform(13.5, 299.4)),
+                randint(100, 990),
+                randint(1, 1000)
+            ) for _ in range(self.number)
+        ]
+
+        return people, products
 
 
 class ServerDatabase(RandomPeopleGenerator):
     def __init__(self, db_name):
-        super(ServerDatabase, self).__init__(number=1000)
+        super(ServerDatabase, self).__init__(number=50)
 
         self.db_name = db_name
 
         self.conn, self.cursor = self._init_connection()
 
-        self.persons_data = self.generate_people()
-
-        self.products_data = self.generate_products()
+        self.persons_data, self.products_data = self.generate_data()
 
     def _init_connection(self):
         """

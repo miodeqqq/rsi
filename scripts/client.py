@@ -140,7 +140,7 @@ class GreetingsClient:
                 persons_data=self.pyro_obj.get_all_persons())
             )
 
-    def search_person_by_query(self):
+    def search_by_query(self):
         """
         Calls database object to find matching query.
         """
@@ -148,8 +148,8 @@ class GreetingsClient:
         if self.uri:
             self.user_query = input('\n\t9) What do you want to search ?\n\t')
 
-            print('\n\tSearch results...'.format(
-                persons_data=self.pyro_obj.get_person_by_query(self.user_query))
+            print('\n\tSearch results...\n\t{result_data}'.format(
+                result_data=self.pyro_obj.get_by_query(self.user_query))
             )
 
     def get_pyro_obj(self):
@@ -177,8 +177,7 @@ class GreetingsClient:
         self.get_db_person_count()
         self.get_db_all_products()
         self.get_db_all_persons()
-
-        self.search_person_by_query()
+        self.search_by_query()
 
 
 GreetingsClient().run()

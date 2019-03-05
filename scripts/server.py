@@ -77,16 +77,24 @@ class GreetingsServer:
 
         return self.cursor.execute("SELECT * FROM person;").fetchall()
 
-    def get_person_by_query(self, user_query):
+    def get_by_query(self, user_query):
         """
         Querying db using text search
         """
 
-        return self.cursor.execute(
-            "SELECT * FROM person WHERE person MATCH '{user_query}'".format(
-                user_query=user_query
-            )
-        ).fetchall()
+        i_like = '%' + user_query + '%'
+
+        product_search = "SELECT * FROM product WHERE name LIKE ? COLLATE NOCASE ORDER BY name;"
+
+        person_search = "SELECT * FROM person WHERE name LIKE ? COLLATE NOCASE ORDER BY name;"
+
+        _result_a = self.cursor.execute(product_search, (i_like,)).fetchall()
+
+        _result_b = self.cursor.execute(person_search, (i_like,)).fetchall()
+
+        _result_a.extend(_result_b)
+
+        return _result_a
 
     @staticmethod
     def mul(x, y):
