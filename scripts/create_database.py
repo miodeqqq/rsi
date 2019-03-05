@@ -125,7 +125,6 @@ class ServerDatabase(RandomPeopleGenerator):
         """
 
         self._initial_cleanup()
-
         self.create_db_structure()
         self.insert_into_person_table()
         self.insert_data_into_product_table()
