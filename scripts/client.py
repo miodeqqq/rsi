@@ -120,6 +120,38 @@ class GreetingsClient:
                 persons_count=self.pyro_obj.get_persons_count())
             )
 
+    def get_db_all_products(self):
+        """
+        Calls database object to return all products.
+        """
+
+        if self.uri:
+            print('\n\t7) Products data from database: \n\t{products_data}\t'.format(
+                products_data=self.pyro_obj.get_all_products())
+            )
+
+    def get_db_all_persons(self):
+        """
+        Calls database object to return all persons.
+        """
+
+        if self.uri:
+            print('\n\t8) Persons data from database: \n\t{persons_data}\t'.format(
+                persons_data=self.pyro_obj.get_all_persons())
+            )
+
+    def search_person_by_query(self):
+        """
+        Calls database object to find matching query.
+        """
+
+        if self.uri:
+            self.user_query = input('\n\t9) What do you want to search ?\n\t')
+
+            print('\n\tSearch results...'.format(
+                persons_data=self.pyro_obj.get_person_by_query(self.user_query))
+            )
+
     def get_pyro_obj(self):
         if all([self.con1, self.con2, self.con3]):
             try:
@@ -143,6 +175,10 @@ class GreetingsClient:
         self.get_calculator_results()
         self.get_db_product_count()
         self.get_db_person_count()
+        self.get_db_all_products()
+        self.get_db_all_persons()
+
+        self.search_person_by_query()
 
 
 GreetingsClient().run()

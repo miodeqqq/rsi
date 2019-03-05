@@ -63,6 +63,31 @@ class GreetingsServer:
 
         return self.cursor.execute("SELECT count(*) from person;").fetchone()[0]
 
+    def get_all_products(self):
+        """
+        Returns all products data.
+        """
+
+        return self.cursor.execute("SELECT * FROM product;").fetchall()
+
+    def get_all_persons(self):
+        """
+        Returns all persons data.
+        """
+
+        return self.cursor.execute("SELECT * FROM person;").fetchall()
+
+    def get_person_by_query(self, user_query):
+        """
+        Querying db using text search
+        """
+
+        return self.cursor.execute(
+            "SELECT * FROM person WHERE person MATCH '{user_query}'".format(
+                user_query=user_query
+            )
+        ).fetchall()
+
     @staticmethod
     def mul(x, y):
         return x * y

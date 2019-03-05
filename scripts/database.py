@@ -48,7 +48,7 @@ class ServerDatabase:
 
         sql_create_person_table = """
             CREATE TABLE IF NOT EXISTS person (
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 name TEXT NOT NULL,
                 surname TEXT NOT NULL,
                 age INTEGER NOT NULL
@@ -57,7 +57,7 @@ class ServerDatabase:
 
         sql_create_product_table = """
             CREATE TABLE IF NOT EXISTS product (
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 name TEXT NOT NULL,
                 price FLOAT NOT NULL,
                 quantity INTEGER NOT NULL,
