@@ -2,5 +2,5 @@
 
 rm -rf ./.cache/ && \
 rm -rf .DS_Store && \
-rm -rf *.db
+rm -rf scripts/rsi.db && \
 rm -rf uri.txt
