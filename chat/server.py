@@ -78,6 +78,9 @@ class Server():
 
 if __name__ == "__main__":
     server = Server()
+
+    print('Server is running ...')
+
     server.create_chat('Pokoj 1')
     server.create_chat('Pokoj 2')
     server.create_chat('Pokoj 3')

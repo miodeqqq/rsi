@@ -1,9 +1,9 @@
 RSI
 ===
 
-### Current stable version: v1.1.0.0
+### Current stable version: v1.2.0.0
 
-### Release date: 05.03.2019
+### Release date: 24.06.2019
 
 ### Author:
 
