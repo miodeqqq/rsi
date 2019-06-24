@@ -5,6 +5,7 @@ import logging
 from suds.client import Client
 
 logging.basicConfig(level=logging.INFO)
+
 logging.getLogger('suds.transport').setLevel(logging.DEBUG)
 
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap11enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding" xmlns:soap12env="http://www.w3.org/2003/05/soap-envelope" xmlns:tns="miodeq_ns" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="miodeq_ns" name="Miodek SOAP">
+   <wsdl:types>
+      <xs:schema targetNamespace="miodeq_ns" elementFormDefault="qualified">
+         <xs:complexType name="write_valuesResponse" />
+         <xs:complexType name="stringArray">
+            <xs:sequence>
+               <xs:element name="string" type="xs:string" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="read_value">
+            <xs:sequence>
+               <xs:element name="index" type="xs:integer" minOccurs="0" nillable="true" />
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="read_valueResponse">
+            <xs:sequence>
+               <xs:element name="read_valueResult" type="xs:string" minOccurs="0" nillable="true" />
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="write_values">
+            <xs:sequence>
+               <xs:element name="values" type="tns:stringArray" minOccurs="0" nillable="true" />
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="write_valuesResponse" type="tns:write_valuesResponse" />
+         <xs:element name="stringArray" type="tns:stringArray" />
+         <xs:element name="read_value" type="tns:read_value" />
+         <xs:element name="read_valueResponse" type="tns:read_valueResponse" />
+         <xs:element name="write_values" type="tns:write_values" />
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="write_values">
+      <wsdl:part name="write_values" element="tns:write_values" />
+   </wsdl:message>
+   <wsdl:message name="write_valuesResponse">
+      <wsdl:part name="write_valuesResponse" element="tns:write_valuesResponse" />
+   </wsdl:message>
+   <wsdl:message name="read_value">
+      <wsdl:part name="read_value" element="tns:read_value" />
+   </wsdl:message>
+   <wsdl:message name="read_valueResponse">
+      <wsdl:part name="read_valueResponse" element="tns:read_valueResponse" />
+   </wsdl:message>
+   <wsdl:service name="RpcDbService">
+      <wsdl:port name="Miodek SOAP" binding="tns:Miodek SOAP">
+         <soap:address location="http://localhost:9000/" />
+      </wsdl:port>
+   </wsdl:service>
+   <wsdl:portType name="Miodek SOAP">
+      <wsdl:operation name="write_values" parameterOrder="write_values">
+         <wsdl:input name="write_values" message="tns:write_values" />
+         <wsdl:output name="write_valuesResponse" message="tns:write_valuesResponse" />
+      </wsdl:operation>
+      <wsdl:operation name="read_value" parameterOrder="read_value">
+         <wsdl:input name="read_value" message="tns:read_value" />
+         <wsdl:output name="read_valueResponse" message="tns:read_valueResponse" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="Miodek SOAP" type="tns:Miodek SOAP">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="write_values">
+         <soap:operation soapAction="write_values" style="document" />
+         <wsdl:input name="write_values">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="write_valuesResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="read_value">
+         <soap:operation soapAction="read_value" style="document" />
+         <wsdl:input name="read_value">
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output name="read_valueResponse">
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>
