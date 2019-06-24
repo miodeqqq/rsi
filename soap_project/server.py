@@ -6,8 +6,7 @@ from wsgiref.simple_server import make_server
 from rpclib.application import Application
 from rpclib.decorator import srpc
 from rpclib.model.complex import Array
-from rpclib.model.primitive import Integer
-from rpclib.model.primitive import String
+from rpclib.model.primitive import Integer, String
 from rpclib.protocol.soap import Soap11
 from rpclib.server.wsgi import WsgiApplication
 from rpclib.service import ServiceBase

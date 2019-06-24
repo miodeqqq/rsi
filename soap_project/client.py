@@ -34,7 +34,7 @@ class DB:
 
 class SOAPClient:
     def __init__(self):
-        self.client = DB(
+        self._client = DB(
             url='http://localhost:9000?wsdl'
         )
 
@@ -45,10 +45,10 @@ class SOAPClient:
             ['RSI']
         ]
 
-        self.client.send_values(values=values)
+        self._client.send_values(values=values)
 
     def _read(self, index):
-        response = self.client.receive_value(index)
+        response = self._client.receive_value(index)
 
         logging.info('\n\tRESPONSE FOR INDEX {index} --> {response}'.format(
             index=index,
